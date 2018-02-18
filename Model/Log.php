@@ -23,7 +23,7 @@ class Log extends DatabaseLogAppModel {
 		$this->data[$this->alias]['uri'] = env('REQUEST_URI');
 		$this->data[$this->alias]['refer'] = env('HTTP_REFERER');
 		$this->data[$this->alias]['user_agent'] = env('HTTP_USER_AGENT');
-
+		$this->data[$this->alias]['token'] = $this->request->header('X-ApiToken');
 		return parent::beforeSave($options);
 	}
 
