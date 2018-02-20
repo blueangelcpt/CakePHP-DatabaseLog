@@ -23,7 +23,11 @@ class Log extends DatabaseLogAppModel {
 		$this->data[$this->alias]['uri'] = env('REQUEST_URI');
 		$this->data[$this->alias]['refer'] = env('HTTP_REFERER');
 		$this->data[$this->alias]['user_agent'] = env('HTTP_USER_AGENT');
-		$this->data[$this->alias]['token'] = Router::getRequest()->header('X-ApiToken');
+		if (PHP_SAPI === 'cli') {
+			$this->data[$this->alias]['token'] = NULL;
+		} else {
+			$this->data[$this->alias]['token'] = Router::getRequest()->header('X-ApiToken');
+		}
 		return parent::beforeSave($options);
 	}
 
