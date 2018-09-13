@@ -29,6 +29,7 @@ class Log extends DatabaseLogAppModel {
 		} else {
 			$this->data[$this->alias]['token'] = Router::getRequest()->header('X-Apitoken');
 		}
+		$this->data[$this->alias]['appversion'] = Router::getRequest()->header('X-Appversion');
 		return parent::beforeSave($options);
 	}
 
