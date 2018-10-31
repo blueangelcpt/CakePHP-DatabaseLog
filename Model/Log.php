@@ -23,13 +23,15 @@ class Log extends DatabaseLogAppModel {
 		$this->data[$this->alias]['uri'] = env('REQUEST_URI');
 		$this->data[$this->alias]['refer'] = env('HTTP_REFERER');
 		$this->data[$this->alias]['user_agent'] = env('HTTP_USER_AGENT');
-		if (empty(env('HTTP_USER_AGENT'))) {
-		// if (PHP_SAPI === 'cli') {
-			$this->data[$this->alias]['token'] = NULL;
-		} else {
+		if (!empty(env('HTTP_USER_AGENT'))) {
 			$this->data[$this->alias]['token'] = Router::getRequest()->header('X-Apitoken');
+			$this->data[$this->alias]['appversion'] = Router::getRequest()->header('X-Appversion');
+			$this->data[$this->alias]['rolling_token'] = Router::getRequest()->header('X-Rolling-Token');
+			$this->data[$this->alias]['platform'] = Router::getRequest()->header('X-Platform');
+			$this->data[$this->alias]['deviceuniqueid'] = Router::getRequest()->header('X-Deviceuniqueid');
+			$this->data[$this->alias]['calllocation'] = Router::getRequest()->header('X-Calllocation');
+			$this->data[$this->alias]['connectivitytype'] = Router::getRequest()->header('X-Connectivitytype');
 		}
-		$this->data[$this->alias]['appversion'] = Router::getRequest()->header('X-Appversion');
 		return parent::beforeSave($options);
 	}
 
